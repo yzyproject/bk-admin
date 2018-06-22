@@ -1,0 +1,40 @@
+{
+  "name": "ym-view",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.6.1",
+    "codemirror": "^5.38.0",
+    "find-up": "^2.1.0",
+    "iconv-lite": "^0.4.23",
+    "is-descriptor": "^1.0.2",
+    "kind-of": "^6.0.2",
+    "path-to-regexp": "^2.2.1",
+    "pkg-dir": "^2.0.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-markdown": "^3.3.2",
+    "react-markdown-editor": "^0.6.2",
+    "react-router": "^4.2.0",
+    "react-router-dom": "^4.2.2",
+    "react-scripts": "1.1.4",
+    "react-umeditor": "^1.0.0-rc12",
+    "safe-buffer": "^5.1.2",
+    "set-value": "^3.0.0",
+    "supports-color": "^5.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "proxy": {
+    "/api": {
+      "target": "http://192.168.1.11:3001"
+    }
+  },
+  "devDependencies": {
+    "babel-plugin-import": "^1.7.0"
+  }
+}
