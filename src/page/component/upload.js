@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form,Icon, Input, Button,message, Upload, Modal} from 'antd';
+import Fetch from '../../common/fetch'; 
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 export default class upLoad  extends React.Component{
@@ -15,6 +16,7 @@ export default class upLoad  extends React.Component{
             url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
             }],
         }
+        this.update()
     }
     handleCancel = () => this.setState({ previewVisible: false })
     handlePreview = (file) => {
@@ -23,9 +25,26 @@ export default class upLoad  extends React.Component{
         previewVisible: true,
         });
     }
-    handleChange = ({ fileList }) => {
-        this.props.setFile({ fileList })
-        this.setState({ fileList })
+    async update(){
+        let boll = this.state.boll;
+        let f = new Fetch();
+        let res = await f.fetch('http://localhost:3001/editor/file',{
+            files:"fileList"
+        },boll)
+        this.setState({
+            boll:false
+        })
+        if(res && res.status === "success"){
+            message.success("请求成功！")
+            this.setState({
+                boll:true
+            })
+        }
+    }
+    async handleChange (info) {
+        
+        
+        
     }
 
     render(){
@@ -44,7 +63,7 @@ export default class upLoad  extends React.Component{
                     listType="picture-card"
                     fileList={fileList}
                     onPreview={this.handlePreview}
-                    onChange={this.handleChange}
+                    onChange={(info)=>this.handleChange(info)}
                     >
                     {fileList.length >= 3 ? null : uploadButton}
                     </Upload>

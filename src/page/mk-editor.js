@@ -23,48 +23,32 @@ class Editor extends React.Component{
             value:'<p>在此输入内容</p>',
             files:[]
         }
+        this.update()
     }
-    
-    //添加数据
-    async addBowen(){
+
+    async update(){
         let boll = this.state.boll;
         let f = new Fetch();
-        let item = {
-            userName : "yzy",
-            password : "000000",
-            role:"admin",
-            token:"",
-            sex:"main",
-            phone:"13265408153",
-            love:"rading",
-            adress:"丰台"
-        }
-        let res = await f.fetch('http://localhost:3001/addOne',{
-            item:item
+        let res = await f.fetch('http://localhost:3001/editor/file',{
+            files:"fileList"
         },boll)
-        this.setState({
-            boll:false
-        })
         if(res && res.status === "success"){
+            message.success("请求成功！")
             this.setState({
                 boll:true
             })
         }
     }
-
+    
     handleChange(content){
         this.setState({
             content: content
         })
     }
-
-   
     
     componentDidMount(){
         
     }
-
-    
 
     async handleSubmit(e) {
         e.preventDefault();
@@ -96,19 +80,9 @@ class Editor extends React.Component{
         console.log("item:",item)
     }
 
-    handleCancel = () => this.setState({ previewVisible: false })
-
-    handlePreview = (file) => {
-        this.setState({
-        previewImage: file.url || file.thumbUrl,
-        previewVisible: true,
-        });
-    }
-
-    handleChange = ({ fileList }) => this.setState({ fileList })
+  
     Files(files){
         this.setState({files})
-        console.log("====filesstate:",this.state.files)
     }
 
     render(){
@@ -164,7 +138,7 @@ class Editor extends React.Component{
                         )}
                     </FormItem>
 
-                    <Uploads setFile = {(files)=>{this.Files(files)}} />
+                   <Uploads/>
                    
                     <FormItem
                         {...formItemLayout}
