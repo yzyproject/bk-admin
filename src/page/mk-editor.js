@@ -20,7 +20,6 @@ class Editor extends React.Component{
             page:1,
             sort:{type:1},
             code:"",
-            value:'<p>在此输入内容</p>',
             files:[]
         }
         this.update()
@@ -29,8 +28,11 @@ class Editor extends React.Component{
     async update(){
         let boll = this.state.boll;
         let f = new Fetch();
-        let res = await f.fetch('http://localhost:3001/editor/file',{
-            files:"fileList"
+        let filter = {
+            cid:"US1528005770148299"
+        }
+        let res = await f.fetch('http://localhost:3001/test',{
+            filter:filter
         },boll)
         if(res && res.status === "success"){
             message.success("请求成功！")
@@ -64,7 +66,8 @@ class Editor extends React.Component{
         let f = new Fetch();
         let item = {};
         item = Object.assign(item,values)
-        item.content = this.state.value
+        item.content =values.content;
+        item.files = this.state.files;
         let res = await f.fetch('http://localhost:3001/editor/addBowen',{
             item:item
         },boll)
@@ -81,8 +84,9 @@ class Editor extends React.Component{
     }
 
   
-    Files(files){
-        this.setState({files})
+    setFiles(files){
+        this.setState({files:files})
+        console.log("this.state.files:",this.state.files)
     }
 
     render(){
@@ -116,6 +120,18 @@ class Editor extends React.Component{
                             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="title" />
                         )}
                     </FormItem>
+
+                    <FormItem
+                       {...formItemLayout}
+                       label="描述"
+                   >
+                       {getFieldDecorator('description', {
+                           rules: [{ required: true, message: 'Please input your contents!' }],
+                       })(
+                           <TextArea  autosize={{ minRows: 6, maxRows: 6 }} />
+                       )}
+                   </FormItem>
+
                     <FormItem
                         {...formItemLayout}
                         label="作者"
@@ -127,18 +143,20 @@ class Editor extends React.Component{
                         )}
                     </FormItem>
 
+                    
+
                     <FormItem
                        
-                        label="内容"
-                    >
-                        {getFieldDecorator('content', {
-                            rules: [{ required: true, message: 'Please input your contents!' }],
-                        })(
-                            <TextArea  autosize={{ minRows: 13, maxRows: 13 }} />
-                        )}
-                    </FormItem>
+                       label="内容"
+                   >
+                       {getFieldDecorator('content', {
+                           rules: [{ required: true, message: 'Please input your contents!' }],
+                       })(
+                           <TextArea  autosize={{ minRows: 13, maxRows: 13 }} />
+                       )}
+                   </FormItem>
 
-                   <Uploads/>
+                   <Uploads setFiles = {(files)=>{this.setFiles(files)}}/>
                    
                     <FormItem
                         {...formItemLayout}

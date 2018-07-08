@@ -7,16 +7,11 @@ export default class upLoad  extends React.Component{
     constructor(obj){
         super(obj)
         this.state = {
+            boll:true,
             previewVisible: false,
             previewImage: '',
-            fileList: [{
-            uid: -1,
-            name: 'xxx.png',
-            status: 'done',
-            url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-            }],
+            fileList: [],
         }
-        this.update()
     }
     handleCancel = () => this.setState({ previewVisible: false })
     handlePreview = (file) => {
@@ -25,26 +20,21 @@ export default class upLoad  extends React.Component{
         previewVisible: true,
         });
     }
-    async update(){
+   
+    
+    handleChange = info =>  {
+        let setFiles = this.props.setFiles
         let boll = this.state.boll;
+        this.setState({fileList:info.fileList})
         let f = new Fetch();
-        let res = await f.fetch('http://localhost:3001/editor/file',{
-            files:"fileList"
-        },boll)
-        this.setState({
-            boll:false
-        })
-        if(res && res.status === "success"){
-            message.success("请求成功！")
-            this.setState({
-                boll:true
-            })
-        }
-    }
-    async handleChange (info) {
-        
-        
-        
+        if (info.file.status === 'uploading') {
+            this.setState({ loading: true });
+            return;
+          }
+          if (info.file.status === 'done') {
+              let files = info.fileList.map(f=>({filename:f.response.filename}))
+            setFiles(files)
+          }
     }
 
     render(){
@@ -59,11 +49,11 @@ export default class upLoad  extends React.Component{
             <span style = {{display:"block"}}>
                 <div className="clearfix">
                     <Upload
-                    action="//jsonplaceholder.typicode.com/posts/"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onPreview={this.handlePreview}
-                    onChange={(info)=>this.handleChange(info)}
+                        action="http://localhost:3001/file"
+                        listType="picture-card"
+                        fileList={fileList}
+                        onPreview={this.handlePreview}
+                        onChange={this.handleChange}
                     >
                     {fileList.length >= 3 ? null : uploadButton}
                     </Upload>
