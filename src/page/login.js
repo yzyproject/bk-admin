@@ -67,7 +67,7 @@ class Login extends React.Component{
                 ]
             }
             let f = new Fetch();
-            let res = await f.fetch('http://localhost:3001/test',
+            let res = await f.fetch('http://localhost:3001/login',
                 {
                     filter:args.filter,
                     limit:args.limit,
@@ -75,9 +75,9 @@ class Login extends React.Component{
                     sort:args.sort
                 },true
             )
-            if(res.status ==="success" && (res.data||[]).length > 0){
+            if(res.status ==="success" && (res.data.list||[]).length > 0){
                 console.log("data",res.data[0])
-                localStorage.user = JSON.stringify(res.data[0])
+                localStorage.user = JSON.stringify(res.data.list[0])
                 this.login();
             }
         }else{

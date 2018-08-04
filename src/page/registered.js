@@ -1,7 +1,8 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import Fetch from '../common/fetch'; 
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Icon, Input, Button,message } from 'antd';
+import Uploads from './component/upload'; 
 import 'antd/dist/antd.css';
 const FormItem = Form.Item;
 require("es6-promise").polyfill();
@@ -10,10 +11,10 @@ class Login extends React.Component{
     constructor(obj){
         super(obj)
         this.state = {
-            boll:true,
             filter:{},
             limit:2,
             page:1,
+            files:[],
             sort:{type:1}
         }
     }
@@ -26,22 +27,22 @@ class Login extends React.Component{
           }
         });
     }
+
+    setFiles(files){
+        this.setState({files:files})
+        console.log("this.state.files:",this.state.files)
+    }
     
     //添加数据
     async addUser(values){
-        let boll = this.state.boll;
         let f = new Fetch();
         let item = values;
+        item.files = this.state.files;
         let res = await f.fetch('http://localhost:3001/addOne',{
             item:item
-        },boll)
-        this.setState({
-            boll:false
         })
         if(res && res.status === "success"){
-            this.setState({
-                boll:true
-            })
+           message.success("添加数据")
         }
     }
     render(){
@@ -80,9 +81,28 @@ class Login extends React.Component{
                         label="手机号码："
                     >
                         {getFieldDecorator('phone', {
-                            rules: [{ required: true, message: 'Please input your Password!' }],
                         })(
-                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
+                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}  placeholder="手机号" />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="职业"
+                    >
+                        {getFieldDecorator('work', {
+                            
+                        })(
+                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}  placeholder="职业" />
+                        )}
+                    </FormItem>
+                    <FormItem
+                        {...formItemLayout}
+                        label="爱好"
+                    >
+                        {getFieldDecorator('love', {
+                            
+                        })(
+                            <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}  placeholder="爱好" />
                         )}
                     </FormItem>
                     <FormItem

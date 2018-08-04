@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form,Icon, Input, Button,message, Upload, Modal} from 'antd';
+import { Form,Icon, Input, Button,message, Upload, Modal,Radio} from 'antd';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import Fetch from '../common/fetch'; 
@@ -8,6 +8,7 @@ const ReactMarkdown = require('react-markdown');
 const { TextArea } = Input;
 const input = '# This is a header\n\nAnd this is a paragraph';
 const FormItem = Form.Item;
+const RadioGroup = Radio.Group;
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 class Editor extends React.Component{
@@ -56,6 +57,7 @@ class Editor extends React.Component{
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
           if (!err) {
+            console.log("===values:",values)
             this.addBowen(values)
           }
         });
@@ -67,8 +69,12 @@ class Editor extends React.Component{
         let item = {};
         item = Object.assign(item,values)
         item.content =values.content;
+        item.type = values.type;
+        item.awesome = "0"
         item.files = this.state.files;
+        item.read = "0";
         let res = await f.fetch('http://localhost:3001/editor/addBowen',{
+            type:values.type,
             item:item
         },boll)
         this.setState({
@@ -126,7 +132,6 @@ class Editor extends React.Component{
                        label="描述"
                    >
                        {getFieldDecorator('description', {
-                           rules: [{ required: true, message: 'Please input your contents!' }],
                        })(
                            <TextArea  autosize={{ minRows: 6, maxRows: 6 }} />
                        )}
@@ -140,6 +145,19 @@ class Editor extends React.Component{
                             rules: [{ required: true, message: 'Please input your title!' }],
                         })(
                             <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="author" />
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="类型"
+                        >
+                        {getFieldDecorator('type')(
+                            <RadioGroup>
+                                <Radio value="course">教程</Radio>
+                                <Radio value="notes">笔记</Radio>
+                                <Radio value="article">文章</Radio>
+                            </RadioGroup>
                         )}
                     </FormItem>
 
