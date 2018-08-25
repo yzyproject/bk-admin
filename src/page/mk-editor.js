@@ -23,24 +23,6 @@ class Editor extends React.Component{
             code:"",
             files:[]
         }
-        this.update()
-    }
-
-    async update(){
-        let boll = this.state.boll;
-        let f = new Fetch();
-        let filter = {
-            cid:"US1528005770148299"
-        }
-        let res = await f.fetch('http://localhost:3001/test',{
-            filter:filter
-        },boll)
-        if(res && res.status === "success"){
-            message.success("请求成功！")
-            this.setState({
-                boll:true
-            })
-        }
     }
     
     handleChange(content){
@@ -70,10 +52,12 @@ class Editor extends React.Component{
         item = Object.assign(item,values)
         item.content =values.content;
         item.type = values.type;
+        item.original = values.original;
+        item.forward = values.forward;
         item.awesome = "0"
         item.files = this.state.files;
         item.read = "0";
-        let res = await f.fetch('http://localhost:3001/editor/addBowen',{
+        let res = await f.fetch('http://localhost:3001/index/addBowen',{
             type:values.type,
             item:item
         },boll)
@@ -157,6 +141,18 @@ class Editor extends React.Component{
                                 <Radio value="course">教程</Radio>
                                 <Radio value="notes">笔记</Radio>
                                 <Radio value="article">文章</Radio>
+                            </RadioGroup>
+                        )}
+                    </FormItem>
+
+                    <FormItem
+                        {...formItemLayout}
+                        label="出处"
+                        >
+                        {getFieldDecorator('from')(
+                            <RadioGroup>
+                                <Radio value="original">原创</Radio>
+                                <Radio value="forward">转发</Radio>
                             </RadioGroup>
                         )}
                     </FormItem>

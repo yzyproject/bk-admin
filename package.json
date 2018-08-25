@@ -19,6 +19,8 @@
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
     "react-umeditor": "^1.0.0-rc12",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
     "safe-buffer": "^5.1.2",
     "set-value": "^3.0.0",
     "supports-color": "^5.4.0"

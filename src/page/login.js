@@ -67,7 +67,7 @@ class Login extends React.Component{
                 ]
             }
             let f = new Fetch();
-            let res = await f.fetch('http://localhost:3001/login',
+            let res = await f.fetch('http://localhost:3001/index/login',
                 {
                     filter:args.filter,
                     limit:args.limit,
@@ -103,8 +103,7 @@ class Login extends React.Component{
         };
         
         return(
-            <span style = {{marginTop:"100px",display:"block"}}>
-                
+            <span className = "form_box" style = {{marginTop:"100px",display:"block",padding:"0 20px"}}>
                 <Form  onSubmit={this.handleSubmit.bind(this)}>
                     <FormItem
                         {...formItemLayout}
@@ -128,7 +127,7 @@ class Login extends React.Component{
                     </FormItem>
                     <FormItem
                         {...formItemLayout}
-                        style = {{textAlign:"right"}}
+                        style = {{textAlign:"center"}}
                     >
                         <Button
                             type="primary"
