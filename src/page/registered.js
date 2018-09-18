@@ -4,6 +4,7 @@ import Fetch from '../common/fetch';
 import { Form, Icon, Input, Button,message } from 'antd';
 import Uploads from './component/upload'; 
 import 'antd/dist/antd.css';
+import Config from '../config';
 const FormItem = Form.Item;
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
@@ -38,7 +39,7 @@ class Login extends React.Component{
         let f = new Fetch();
         let item = values;
         item.files = this.state.files;
-        let res = await f.fetch('http://localhost:3001/addOne',{
+        let res = await f.fetch(`${Config.host}/addOne`,{
             item:item
         })
         if(res && res.status === "success"){

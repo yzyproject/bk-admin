@@ -2,6 +2,7 @@ import React from 'react';
 // import {NavLink,BrowserRouter} from 'react-router-dom';
 import Fetch from '../common/fetch'; 
 import { Form, Icon, Input, Button } from 'antd';
+import Config from '../config';
 const FormItem = Form.Item;
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
@@ -33,7 +34,7 @@ class Login extends React.Component{
             love:"rading",
             adress:"丰台"
         }
-        let res = await f.fetch('http://localhost:3001/addOne',{
+        let res = await f.fetch(`${Config.host}/addOne`,{
             item:item
         },boll)
         this.setState({

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form,Icon, Input, Button,message, Upload, Modal} from 'antd';
 import Fetch from '../../common/fetch'; 
+import Config from '../../config';
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
 export default class upLoad  extends React.Component{
@@ -49,7 +50,7 @@ export default class upLoad  extends React.Component{
             <span style = {{display:"block"}}>
                 <div className="clearfix">
                     <Upload
-                        action="http://localhost:3001/file"
+                        action= {`${Config.host}/file`}
                         listType="picture-card"
                         fileList={fileList}
                         onPreview={this.handlePreview}

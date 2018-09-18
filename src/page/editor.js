@@ -1,8 +1,10 @@
 import React from 'react';
 import { Form,Icon, Input, Button } from 'antd';
+import Config from '../../config';
 import Quill from 'quill'
 import 'quill/dist/quill.snow.css'
 import Fetch from '../common/fetch'; 
+
 // const ReactMarkdown = require('react-markdown');
 // const input = '# This is a header\n\nAnd this is a paragraph'
 const FormItem = Form.Item;
@@ -36,7 +38,7 @@ class Editor extends React.Component{
             love:"rading",
             adress:"丰台"
         }
-        let res = await f.fetch('http://localhost:3001/addOne',{
+        let res = await f.fetch(`${Config.host}/addOne`,{
             item:item
         },boll)
         this.setState({
@@ -115,7 +117,7 @@ class Editor extends React.Component{
         let item = {};
         item = Object.assign(item,values)
         item.content = this.state.value
-        let res = await f.fetch('http://localhost:3001/editor/addBowen',{
+        let res = await f.fetch( `${Config.host}/editor/addBowen`,{
             item:item
         },boll)
         this.setState({

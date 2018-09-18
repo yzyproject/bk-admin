@@ -4,6 +4,7 @@ import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
 import Fetch from '../common/fetch'; 
 import Uploads from './component/upload'; 
+import Config from '../config';
 const ReactMarkdown = require('react-markdown');
 const { TextArea } = Input;
 const input = '# This is a header\n\nAnd this is a paragraph';
@@ -57,7 +58,7 @@ class Editor extends React.Component{
         item.awesome = "0"
         item.files = this.state.files;
         item.read = "0";
-        let res = await f.fetch('http://localhost:3001/index/addBowen',{
+        let res = await f.fetch(`${Config.host}/index/addBowen`,{
             type:values.type,
             item:item
         },boll)
