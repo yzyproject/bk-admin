@@ -50,7 +50,7 @@ export default class upLoad  extends React.Component{
             <span style = {{display:"block"}}>
                 <div className="clearfix">
                     <Upload
-                        action= {`${Config.host}/file`}
+                        action= {`${Config.host}/index/file`}
                         listType="picture-card"
                         fileList={fileList}
                         onPreview={this.handlePreview}

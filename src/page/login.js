@@ -68,7 +68,7 @@ class Login extends React.Component{
                 ]
             }
             let f = new Fetch();
-            let res = await f.fetch('http://localhost:3001/index/login',
+            let res = await f.fetch(`${Config.host}/index/login`,
                 {
                     filter:args.filter,
                     limit:args.limit,
